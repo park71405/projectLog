@@ -18,7 +18,10 @@ public class PostService {
         //repository.save(postCreate)
         // postCreate -> Entity
 
-        Post post = new Post(postCreate.getTitle(), postCreate.getContent());
+        Post post = Post.builder()
+                .title(postCreate.getTitle())
+                .content(postCreate.getContent())
+                .build();
 
         postRepository.save(post);
     }
