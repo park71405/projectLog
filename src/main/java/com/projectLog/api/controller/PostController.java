@@ -2,6 +2,7 @@ package com.projectLog.api.controller;
 
 import com.projectLog.api.domain.Post;
 import com.projectLog.api.request.PostCreate;
+import com.projectLog.api.response.PostResponse;
 import com.projectLog.api.service.PostService;
 import jakarta.validation.Valid;
 import lombok.NoArgsConstructor;
@@ -58,10 +59,10 @@ public class PostController {
      */
 
     @GetMapping("/posts/{postId}")
-    public Post get(@PathVariable(name = "postId") Long id){
-        Post post = postService.get(id);
+    public PostResponse get(@PathVariable(name = "postId") Long id){
+        PostResponse response = postService.get(id);
 
-        return post;
+        return response;
     }
 
 }

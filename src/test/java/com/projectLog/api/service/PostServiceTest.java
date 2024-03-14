@@ -3,6 +3,7 @@ package com.projectLog.api.service;
 import com.projectLog.api.domain.Post;
 import com.projectLog.api.repository.PostRepository;
 import com.projectLog.api.request.PostCreate;
+import com.projectLog.api.response.PostResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,13 +58,13 @@ class PostServiceTest {
         postRepository.save(requsetPost);
 
         // when
-        Post post = postService.get(requsetPost.getId());
+        PostResponse response = postService.get(requsetPost.getId());
 
         // then
-        assertNotNull(post);
+        assertNotNull(response);
         assertEquals(1L, postRepository.count());
-        assertEquals("foo", post.getTitle());
-        assertEquals("bar", post.getContent());
+        assertEquals("foo", response.getTitle());
+        assertEquals("bar", response.getContent());
 
     }
 
