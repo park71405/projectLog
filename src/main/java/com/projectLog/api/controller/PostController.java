@@ -5,17 +5,11 @@ import com.projectLog.api.request.PostCreate;
 import com.projectLog.api.response.PostResponse;
 import com.projectLog.api.service.PostService;
 import jakarta.validation.Valid;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -59,10 +53,14 @@ public class PostController {
      */
 
     @GetMapping("/posts/{postId}")
-    public PostResponse get(@PathVariable(name = "postId") Long id){
-        PostResponse response = postService.get(id);
+    public PostResponse get(@PathVariable Long postId){
 
-        return response;
+        return postService.get(postId);
+    }
+
+    @GetMapping("/posts")
+    public List<PostResponse> getList(){
+        return postService.getList();
     }
 
 }
