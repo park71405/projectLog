@@ -3,6 +3,7 @@ package com.projectLog.api.service;
 import com.projectLog.api.domain.Post;
 import com.projectLog.api.repository.PostRepository;
 import com.projectLog.api.request.PostCreate;
+import com.projectLog.api.request.PostSearch;
 import com.projectLog.api.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,9 +46,9 @@ public class PostService {
                 .build();
     }
 
-    public List<PostResponse> getList(Pageable pageable) {
+    public List<PostResponse> getList(PostSearch postSearch) {
 
-        return postRepository.findAll(pageable).stream()
+        return postRepository.getList(postSearch).stream()
                 .map(PostResponse::new)
                 .collect(Collectors.toList());
     }

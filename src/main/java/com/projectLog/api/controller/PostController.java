@@ -2,6 +2,7 @@ package com.projectLog.api.controller;
 
 import com.projectLog.api.domain.Post;
 import com.projectLog.api.request.PostCreate;
+import com.projectLog.api.request.PostSearch;
 import com.projectLog.api.response.PostResponse;
 import com.projectLog.api.service.PostService;
 import jakarta.validation.Valid;
@@ -61,9 +62,9 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public List<PostResponse> getList(@PageableDefault(size = 5) Pageable pageable){
+    public List<PostResponse> getList(@ModelAttribute PostSearch postSearch){
 
-        return postService.getList(pageable);
+        return postService.getList(postSearch);
     }
 
 }

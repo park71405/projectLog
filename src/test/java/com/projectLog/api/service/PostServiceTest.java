@@ -3,6 +3,7 @@ package com.projectLog.api.service;
 import com.projectLog.api.domain.Post;
 import com.projectLog.api.repository.PostRepository;
 import com.projectLog.api.request.PostCreate;
+import com.projectLog.api.request.PostSearch;
 import com.projectLog.api.response.PostResponse;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Assertions;
@@ -81,7 +82,7 @@ class PostServiceTest {
     @DisplayName("글 1페이지 조회")
     void test3(){
         // given
-        List<Post> requestPosts = IntStream.range(1, 31)
+        List<Post> requestPosts = IntStream.range(0, 20)
                         .mapToObj(i -> Post.builder()
                                 .title("호돌맨 제목 " + i)
                                 .content("반포자이 " + i)
@@ -90,15 +91,17 @@ class PostServiceTest {
 
         postRepository.saveAll(requestPosts);
 
-        Pageable pageable = PageRequest.of(0, 5, DESC, "id");
+        PostSearch postSearch = PostSearch.builder()
+                .page(1)
+                .size(10)
+                .build();
 
         // when
-        List<PostResponse> posts = postService.getList(pageable);
+        List<PostResponse> posts = postService.getList(postSearch);
 
         // then
-        assertEquals(5L, posts.size());
-        assertEquals("호돌맨 제목 30", posts.get(0).getTitle());
-        assertEquals("호돌맨 제목 26", posts.get(4).getTitle());
+        assertEquals(10L, posts.size());
+        assertEquals("호돌맨 제목 19", posts.get(0).getTitle());
 
     }
 
