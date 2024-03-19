@@ -1,10 +1,7 @@
 package com.projectLog.api.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
@@ -26,4 +23,14 @@ public class Post {
         this.content = content;
     }
 
+    public PostEditer.PostEditerBuilder toEditor(){
+        return PostEditer.builder()
+                .title(title)
+                .content(content);
+    }
+
+    public void edit(PostEditer postEditer) {
+        title = postEditer.getTitle();
+        content = postEditer.getContent();
+    }
 }

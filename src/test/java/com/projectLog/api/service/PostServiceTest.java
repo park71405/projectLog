@@ -3,6 +3,7 @@ package com.projectLog.api.service;
 import com.projectLog.api.domain.Post;
 import com.projectLog.api.repository.PostRepository;
 import com.projectLog.api.request.PostCreate;
+import com.projectLog.api.request.PostEdit;
 import com.projectLog.api.request.PostSearch;
 import com.projectLog.api.response.PostResponse;
 import org.assertj.core.util.Lists;
@@ -102,6 +103,61 @@ class PostServiceTest {
         // then
         assertEquals(10L, posts.size());
         assertEquals("호돌맨 제목 19", posts.get(0).getTitle());
+
+    }
+
+    @Test
+    @DisplayName("글 제목 수정")
+    void test4(){
+        // given
+        Post post = Post.builder()
+                .title("호돌맨")
+                .content("반포자이")
+                .build();
+
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title("호돌걸")
+                .content("반포자이")
+                .build();
+
+        // when
+        postService.edit(post.getId(), postEdit);
+
+        // then
+        Post changedPost = postRepository.findById(post.getId())
+                .orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id=" + post.getId()));
+
+        assertEquals("호돌걸", changedPost.getTitle());
+
+    }
+
+    @Test
+    @DisplayName("글 내용 수정")
+    void test5(){
+        // given
+        Post post = Post.builder()
+                .title("호돌맨")
+                .content("반포자이")
+                .build();
+
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title("호돌맨")
+                .content("초가집")
+                .build();
+
+        // when
+        postService.edit(post.getId(), postEdit);
+
+        // then
+        Post changedPost = postRepository.findById(post.getId())
+                .orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id=" + post.getId()));
+
+        assertEquals("호돌맨", changedPost.getTitle());
+        assertEquals("초가집", changedPost.getContent());
 
     }
 

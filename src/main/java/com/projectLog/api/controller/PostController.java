@@ -2,6 +2,7 @@ package com.projectLog.api.controller;
 
 import com.projectLog.api.domain.Post;
 import com.projectLog.api.request.PostCreate;
+import com.projectLog.api.request.PostEdit;
 import com.projectLog.api.request.PostSearch;
 import com.projectLog.api.response.PostResponse;
 import com.projectLog.api.service.PostService;
@@ -65,6 +66,11 @@ public class PostController {
     public List<PostResponse> getList(@ModelAttribute PostSearch postSearch){
 
         return postService.getList(postSearch);
+    }
+
+    @PatchMapping("/posts/{postId}")
+    public void edit(@PathVariable Long postId, @RequestBody @Valid PostEdit request){
+        postService.edit(postId, request);
     }
 
 }
