@@ -2,6 +2,7 @@ package com.projectLog.api.service;
 
 import com.projectLog.api.domain.Post;
 import com.projectLog.api.domain.PostEditer;
+import com.projectLog.api.exception.PostNotFound;
 import com.projectLog.api.repository.PostRepository;
 import com.projectLog.api.request.PostCreate;
 import com.projectLog.api.request.PostEdit;
@@ -39,7 +40,7 @@ public class PostService {
 
     public PostResponse get(Long id){
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(PostNotFound::new);
 
         // 서비스 정책에 맞는 응답 클래스를 생성
         return PostResponse.builder()
@@ -60,7 +61,7 @@ public class PostService {
     public void edit(Long id, PostEdit postEdit){
 
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(PostNotFound::new);
 
         PostEditer.PostEditerBuilder postEditerBuilder = post.toEditor();
 
@@ -75,7 +76,7 @@ public class PostService {
 
     public void delete(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(PostNotFound::new);
 
         postRepository.delete(post);
     }
