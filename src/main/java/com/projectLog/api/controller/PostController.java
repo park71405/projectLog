@@ -1,6 +1,6 @@
 package com.projectLog.api.controller;
 
-import com.projectLog.api.domain.Post;
+import com.projectLog.api.exception.InvalidRequest;
 import com.projectLog.api.request.PostCreate;
 import com.projectLog.api.request.PostEdit;
 import com.projectLog.api.request.PostSearch;
@@ -9,8 +9,6 @@ import com.projectLog.api.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,12 +39,8 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/posts")
-    public void post(@RequestBody @Valid PostCreate request) throws Exception { //MediaType.APPLICATION_JSON
-
-        // Case 1. 저장한 데이터 Entity -> response로 응답하기
-        // Case 2. 저장한 데이터 primary id -> response로 응답하기
-        //          client에서는 수신한 id를 글 조회 api를 통해 데이터를 수신받음
-        // Case 3. 응답 필요없음 -> 클라이언트에서 모든 POST(글) 데이터 context를 관리
+    public void post(@RequestBody @Valid PostCreate request) throws Exception, InvalidRequest { //MediaType.APPLICATION_JSON
+        request.validate();
         postService.write(request);
 
     }
