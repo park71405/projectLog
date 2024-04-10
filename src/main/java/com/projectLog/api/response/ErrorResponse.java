@@ -31,10 +31,10 @@ public class ErrorResponse {
     public ErrorResponse(String code, String message, Map<String, String> validation) {
         this.code = code;
         this.message = message;
-        this.validation = validation;
+        this.validation = validation != null ? validation : new HashMap<>();
     }
 
-    public void addValidation(String fielName, String errorMessage){
-        this.validation.put(fielName, errorMessage);
+    public void addValidation(String fileName, String errorMessage){
+        this.validation.put(fileName, errorMessage);
     }
 }
